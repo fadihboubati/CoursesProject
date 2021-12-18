@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "CreateRole";
+}
+
+@model CoursesProject.Models.AccountViewModels.CreateRoleViewModel
+<h1>Create Role</h1>
+
+<form method="post" asp-action="CreateRole">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="RoleName" class="col-form-label-lg"></label>
+        <div class="col-sm-10">
+            <input asp-for="RoleName" class="form-control" placeholder="Enter Role Name" />
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-dark">
+                CreteRole
+            </button>
+        </div>
+    </div>
+
+
+</form>

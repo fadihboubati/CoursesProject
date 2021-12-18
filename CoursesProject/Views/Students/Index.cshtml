@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<CoursesProject.Data.AppUser> _signInManager
+@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (_signInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseStudents);
+            </th>
+            <th>
+                Teacher Name
+            </th>
+            <th>
+                Operations
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stu in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => stu.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => stu.Age)
+                </td>
+                <td>
+
+                    @for (int i = 0; i < stu.CourseStudents.Count; i++)
+                    {
+                        <p>@stu.CourseStudents[i].Course.CourseName</p>
+                    }
+
+                </td>
+                <td>
+
+                    @for (int i = 0; i < stu.CourseStudents.Count; i++)
+                    {
+                        @for (int j = 0; j < ViewBag.Trainers.Count; j++)
+                        {
+                            if (ViewBag.Trainers[j].Id == stu.CourseStudents[i].Course.TrainerId)
+                            {
+                                <p>@ViewBag.Trainers[j].TrainerName</p>
+                            }
+                        }
+                    }
+
+
+                </td>
+                @*<td>
+                        <a asp-action="Edit" asp-route-id="@stu.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@stu.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@stu.Id">Delete</a>
+                    </td>*@
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@stu.Id">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@stu.Id">Delete</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@stu.Id">Details</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

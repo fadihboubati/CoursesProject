@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "EditeRole";
+}
+
+@* We have a form here
+    when submit
+    (ussualy in nodejs, we were using DOM or Request to handel the data from the form)
+    but here, we will use razor way, using using "asp-for" attribute to link the value of the input with a spacific property for a ViewModel
+    So, when we submit, an instacne from this ViewModel will be created and send it back to the spacific action that mention in the form elemetn using "asp-action"
+
+    so that, we should declear that ViewModel using @model VIEMODENAME
+*@
+<h1>Edite Role</h1>
+
+@model CoursesProject.Models.AccountViewModels.EdditRoleViewModel
+<form method="post" asp-action="EditeRole" class="border p-2">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Id" class="col-form-label-lg"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="RoleName" class="col-form-label-lg"></label>
+        <div class="col-sm-10">
+            <input asp-for="RoleName" placeholder="Enter Role Name" class="form-control" />
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-secondary">
+                Update The Role
+            </button>
+
+            <a asp-action="ListRoles" asp-controller="Account" class="btn btn-warning">
+                Cancel
+            </a>
+        </div>
+    </div>
+
+</form>
+
+@* List of Users Card *@
+<div class="card mt-2">
+    <div class="card-header">
+        Users In This Role
+    </div>
+
+    <div class="card-body">
+        @if (Model.Users.Any())
+        {
+            foreach (var user in Model.Users)
+            {
+                <h5 class="card-title">@user</h5>
+            }
+        }
+        else
+        {
+            <h5 class="card-title">No Users in this role</h5>
+        }
+
+        <div class="card-footer">
+            <a asp-action="EditUsersInRole" asp-route-id="@Model.Id">Add or remove user from this role</a>
+        </div>
+    </div>
+</div>
+
+
+
