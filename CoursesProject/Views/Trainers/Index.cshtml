@@ -11,7 +11,7 @@
 @if (_signInManager.IsSignedIn(User))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
     </p>
 
 }
@@ -39,12 +39,13 @@
                         @Html.DisplayFor(modelItem => item.TrainerName)
                     </td>
                     @*<td>
-                        @Html.DisplayFor(modelItem => item.attachment)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.attachment)
+                        </td>*@
                     <td>
-                        <button type="submit" class="btn btn-outline-secondary">
+                        <button type="submit" class="btn btn-outline-dark">
                             Download
                         </button>
+                        @*<img src="~/Images/download-btn.png" height="220" width="140" alt="Alternate Text" />*@
                     </td>
                     @*<td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

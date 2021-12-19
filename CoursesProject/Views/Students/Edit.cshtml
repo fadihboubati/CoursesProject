@@ -23,15 +23,123 @@
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <h4>Currently Student's courses</h4>
+                @*StudentCourses*@
+                @*Courses*@
+                @for (int i = 0; i < ViewBag.StudentCourses.Count; i++)
+                {
+                    <label>
+                        @ViewBag.StudentCourses[i].Course.CourseName
+                        @*<input checked name="selectedCourses" type="checkbox" value="@ViewBag.StudentCourses[i].Course.Id" />*@
+                    </label>
+                    <br />
+
+                }
+                <hr />
+                <h4>Update the Student's courses</h4>
+
+                @for (int i = 0; i < ViewBag.Courses.Count; i++)
+                {
+                    <label>
+                        @ViewBag.Courses[i].CourseName
+                        <input name="selectedCourses" type="checkbox" value="@ViewBag.Courses[i].Id" />
+                    </label>
+                    <br />
+
+                }
+                <hr />
+
+                @*@for (int i = 0; i < ViewBag.StudentCourses.Count; i++)
+            {
+                @for (int j = 0; j < ViewBag.Courses.Count; j++)
+                {
+
+                }
+            }*@
+
+
+                @*@foreach (var c in ViewBag.OtherCourses)
+            {
+                <label>
+                    @c.CourseName
+                    <input name="selectedCourses" type="checkbox" value="@c.Id" />
+                </label>
+
+                <br />
+
+            }*@
+
+                @*@for (int i = 0; i < ViewBag.OtherCourses.Count; i++)
+            {
+                <label>
+                    @ViewBag.OtherCourses[i].CourseName
+                    <input name="selectedCourses" type="checkbox" value="@ViewBag.OtherCourses[i].Id" />
+                </label>
+                <br />
+
+            }*@
+                @*@for (int k = 0; k < ViewBag.Courses.Count; k++)
+            {
+                if (ViewBag.StudentCourses[i].CourseId != ViewBag.Courses[k].Id)
+                {
+                    <label>
+                        @ViewBag.Courses[k].CourseName
+                        <input name="selectedCourses" type="checkbox" value="@ViewBag.Courses[k].Id" />
+                    </label>
+                    <br />
+                }
+                else
+                {
+                    <label>
+                        @ViewBag.StudentCourses[i].Course.CourseName
+                        <input checked name="selectedCourses" type="checkbox" value="@ViewBag.StudentCourses[i].Course.Id" />
+                    </label>
+                    <br />
+                }
+            }*@
+
+
+                @*@for (int j = 0; j < ViewBag.Courses.Count; j++)
+            {
+
+                @for (int k = 0; k < ViewBag.StudentCourses; k++)
+                {
+                    if (true)
+                    {
+
+                    }
+                }
+
+
+                if (ViewBag.courses_bag[j].Id == ViewBag.course_student.Count)
+                {
+                    <label>
+                        @ViewBag.StudentCourses[i].CourseName
+                        <input name="selectedCourses" type="checkbox" value="@ViewBag.courses_bag[i].Id" />
+                    </label>
+                    <br />
+                }
+            }*@
+
+
             </div>
+
+                <div class="form-group">
+                    <input type="submit" disabled value="Update" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Soon.. not ready yet"/>
+                </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+
+    
+        <a asp-action="Index" class="btn ">
+            Back to List
+        </a>
+    
 </div>
 
 @section Scripts {

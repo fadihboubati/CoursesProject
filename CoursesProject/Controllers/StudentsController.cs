@@ -89,9 +89,9 @@ namespace CoursesProject.Controllers
             if (ModelState.IsValid)
             {
                 await _context.AddAsync(student);
- 
+
                 await _context.SaveChangesAsync();
- 
+
 
                 for (int i = 0; i < selectedCourses.Count(); i++)
                 {
@@ -125,6 +125,30 @@ namespace CoursesProject.Controllers
             {
                 return NotFound();
             }
+            var stu = _context.Students.FindAsync(id);
+
+            ViewBag.Courses = await _context.Courses.ToListAsync();
+            ViewBag.StudentCourses = await _context.CourseStudents
+                .Where(cs => cs.StudentId == id)
+                .ToListAsync();
+
+            var Courses = await _context.Courses.ToListAsync();
+            var StudentCourses = await _context.CourseStudents
+                .Where(cs => cs.StudentId == id)
+                .ToListAsync();
+
+
+            var commonUsers = Courses.Select(c => c.Id).Intersect(StudentCourses.Select(sc => sc.CourseId));
+            ViewBag.commonUsers = commonUsers;
+
+            //var StudentCourses = await _context.CourseStudents
+            //     .Where(cs => cs.StudentId == id)
+            //     .ToListAsync();
+
+            //var result = _context.Courses.Where(c => StudentCourses.Any(sc => sc.CourseId.Equals(c.Id)));
+            //ViewBag.OtherCourses = result;
+
+            //IEnumerable<ItemBO> result = items.Where(item => categories.Any(category => category.ItemCategory.equals(item.ItemCategory)));
             return View(student);
         }
 
@@ -134,7 +158,7 @@ namespace CoursesProject.Controllers
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,StudentName,Age")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,StudentName,Age")] Student student, string[] selectedCourses)
         {
             if (id != student.Id)
             {
@@ -147,6 +171,29 @@ namespace CoursesProject.Controllers
                 {
                     _context.Update(student);
                     await _context.SaveChangesAsync();
+
+                    var sc = await _context.CourseStudents
+                        .Where(sc => sc.StudentId == student.Id)
+                        .ToListAsync();
+
+
+
+                    //for (int i = 0; i < sc.Count; i++)
+                    //{
+                    //    for (int j = 0; j < selectedCourses.Count(); j++)
+                    //    {
+                    //        if (sc[i].StudentId == student.Id)
+                    //        {
+                    //            sc[i].CourseId = Convert.ToInt32(selectedCourses[j]);
+                    //        }
+
+                    //    }
+                    //}
+
+
+                    //await _context.Update()
+
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
