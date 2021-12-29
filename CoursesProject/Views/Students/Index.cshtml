@@ -11,12 +11,12 @@
 @if (_signInManager.IsSignedIn(User))
 {
     <p>
-        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+        <a asp-action="Create" class="btn btn-outline-dark">Create New</a>
     </p>
 
 }
 <table class="table">
-    <thead>
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.StudentName)
@@ -47,15 +47,12 @@
                     @Html.DisplayFor(modelItem => stu.Age)
                 </td>
                 <td>
-
                     @for (int i = 0; i < stu.CourseStudents.Count; i++)
                     {
                         <p>@stu.CourseStudents[i].Course.CourseName</p>
                     }
-
                 </td>
                 <td>
-
                     @for (int i = 0; i < stu.CourseStudents.Count; i++)
                     {
                         @for (int j = 0; j < ViewBag.Trainers.Count; j++)
@@ -66,14 +63,7 @@
                             }
                         }
                     }
-
-
                 </td>
-                @*<td>
-                        <a asp-action="Edit" asp-route-id="@stu.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@stu.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@stu.Id">Delete</a>
-                    </td>*@
                 <td>
                     @if (User.IsInRole("Administrator"))
                     {
@@ -82,7 +72,6 @@
                     }
                     <a asp-action="Details" asp-route-id="@stu.Id" class="btn btn-outline-info">Details</a>
                 </td>
-
             </tr>
         }
     </tbody>

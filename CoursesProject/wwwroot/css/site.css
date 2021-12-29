@@ -78,8 +78,9 @@ body {
 /* JUMBOTRON STYLE HERE */
 /* JUMBOTRON STYLE HERE */
 .jumbotron {
-    background: linear-gradient( rgba(0, 0, 250, 0.25), rgba(125, 250, 250, 0.45) ), url(../Images/cover.png);
+    background: linear-gradient( rgba(0, 0, 250, 0.25), rgba(125, 250, 250, 0.45) ), url(../Images/cover2.png);
     background-repeat: no-repeat;
+    background-size:cover;
     background-attachment: fixed;
     color: white !important;
     height: 100vh;

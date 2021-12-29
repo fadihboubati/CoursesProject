@@ -11,73 +11,11 @@
 </head>
 <body>
     <header>
-        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CoursesProject</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            @if (_signInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item">
-                                    <form asp-controller="Account" asp-action="Logout" method="post">
-                                        <button type="submit" class="btn btn-link">
-                                            Logout @User.Identity.Name
-                                        </button>
-                                    </form>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-action="ChangePassword" asp-controller="Account">
-                                        Change Password
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-                                </li>
-                            }
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">Courses</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Trainers" asp-action="Index">Trainers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">Students</a>
-                            </li>
-                            @if (User.IsInRole("Administrator"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ListRoles">ListRoles</a>
-                                </li>
-
-                            }
-
-                        </ul>
-                    </div>
-                </div>
-            </nav>*@
-        @* ---------------------------------------------------------- *@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand mr-5" asp-area="" asp-controller="Home" asp-action="Index">
 
                 <img height="125" width="125" class="btn-llr" src="~/Images/logo.png" alt="Logo" />
             </a>
-            @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>*@
-
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -99,12 +37,20 @@
             <div class="mr-5 nav-item dropdown dropdown-menu-left">
                 @if (!_signInManager.IsSignedIn(User))
                 {
-                    <a style="font-size: 25px" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a style="font-size: 25px" class="btn btn-secondary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Login & Register
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a style="font-size: 25px" class="dropdown-item" asp-controller="Account" asp-action="Login">Login</a>
-                        <a style="font-size: 25px" class="dropdown-item" asp-controller="Account" asp-action="Register">Register</a>
+                        <a style="font-size: 20px" class="dropdown-item" asp-controller="Account" asp-action="Login">
+                            <img height="20" width="20" src="~/Images/sign-in.png" alt="Alternate Text" />
+                            &nbsp; Login
+
+                        </a>
+                        <a style="font-size: 20px" class="dropdown-item" asp-controller="Account" asp-action="Register">
+                            <img height="20" width="20" src="~/Images/note.png" alt="Alternate Text" />
+                            &nbsp; Register
+                            
+                        </a>
                         @*<div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>*@
                     </div>
@@ -112,15 +58,19 @@
                 }
                 else
                 {
-                    <a style="font-size: 25px" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a style="font-size: 25px" class="btn btn-secondary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @User.Identity.Name
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a style="font-size: 25px" class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Change PW</a>
-                        <a style="font-size: 25px" class="dropdown-item" href="#">
+                        <a style="font-size: 20px" class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">
+                            <img height="20" width="20" src="~/Images/reset-password.png" alt="Alternate Text" />
+                            Change PW
+                        </a>
+                        <a style="font-size: 20px" class="dropdown-item" href="#">
                             @*Logout*@
                             <form asp-controller="Account" asp-action="Logout" method="post">
-                                <button style="font-size: 25px; color:black" type="submit" class="btn btn-link">
+                                <button style="font-size: 18px; color:black" type="submit" class="btn btn-link">
+                                    <img height="20" width="20" src="~/Images/logout.png" alt="Alternate Text" />
                                     Logout
                                 </button>
                             </form>
@@ -128,7 +78,7 @@
                         @if (User.IsInRole("Administrator"))
                         {
                             <div class="dropdown-divider"></div>
-                            <a style="font-size: 25px" class="dropdown-item" asp-controller="Account" asp-action="ListRoles">ListRoles</a>
+                            <a style="font-size: 20px" class="dropdown-item" asp-controller="Account" asp-action="ListRoles">ListRoles</a>
 
                         }
                     </div>

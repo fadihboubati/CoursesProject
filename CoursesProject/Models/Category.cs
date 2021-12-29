@@ -17,6 +17,7 @@ namespace CoursesProject.Models
 
 
         // One Category has many Courses
+        // navigation propertiy 
         public List<Course> Courses { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model CoursesProject.Models.Trainer
+﻿@model CoursesProject.Models.ViewModels.TrainerViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="Id" value="@ViewBag.Id" />
             <div class="form-group">
                 <label asp-for="TrainerName" class="control-label"></label>
                 <input asp-for="TrainerName" class="form-control" />
@@ -20,11 +20,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="attachment" class="control-label"></label>
-                <input asp-for="attachment" class="form-control" />
+                <input asp-for="attachment" type="file" class="form-control" />
                 <span asp-validation-for="attachment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
     </div>

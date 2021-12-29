@@ -11,7 +11,7 @@
 @if (_signInManager.IsSignedIn(User))
 {
     <p>
-        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+        <a asp-action="Create" class="btn btn-outline-dark">Create New</a>
     </p>
 
 }
@@ -20,13 +20,16 @@
 
 
     <table class="table">
-        <thead>
+        <thead class="thead-dark">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.TrainerName)
                 </th>
                 <th>
                     Curriculum Vitae
+                </th>
+                <th>
+                    Operations
                 </th>
                 <th></th>
             </tr>
@@ -36,30 +39,25 @@
             {
                 <tr>
                     <td>
+                        @*@item.TrainerName;*@
                         @Html.DisplayFor(modelItem => item.TrainerName)
                     </td>
                     @*<td>
                             @Html.DisplayFor(modelItem => item.attachment)
                         </td>*@
                     <td>
-                        <button type="submit" class="btn btn-outline-dark">
+                        <button disabled type="submit" class="btn btn-outline-dark" data-toggle="tooltip" data-placement="top" title="Soon.. not ready yet">
                             Download
                         </button>
                         @*<img src="~/Images/download-btn.png" height="220" width="140" alt="Alternate Text" />*@
                     </td>
-                    @*<td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>*@
-
                     <td>
                         @if (User.IsInRole("Administrator"))
                         {
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
                         }
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
                     </td>
                 </tr>
             }

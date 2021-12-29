@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using CoursesProject.Data;
 using CoursesProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using CoursesProject.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CoursesProject.Controllers
 {
@@ -15,10 +19,12 @@ namespace CoursesProject.Controllers
     public class TrainersController : Controller
     {
         private readonly AppDbContext _context;
+        private IWebHostEnvironment _environment;
 
-        public TrainersController(AppDbContext context)
+        public TrainersController(AppDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
 
         // GET: Trainers
@@ -34,7 +40,7 @@ namespace CoursesProject.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var trainer = await _context.Trainers
@@ -60,11 +66,20 @@ namespace CoursesProject.Controllers
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TrainerName,attachment")] Trainer trainer)
+        public async Task<IActionResult> Create([Bind("Id,TrainerName,attachment")] TrainerViewModel trainer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(trainer);
+                string imgFullName = "~/Images/" + UploadFile(trainer);
+
+                Trainer model = new Trainer
+                {
+                    TrainerName = trainer.TrainerName,
+                    attachment = imgFullName
+
+                };
+
+                _context.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -81,11 +96,12 @@ namespace CoursesProject.Controllers
             }
 
             var trainer = await _context.Trainers.FindAsync(id);
+            ViewBag.Id = trainer.Id;
             if (trainer == null)
             {
                 return NotFound();
             }
-            return View(trainer);
+            return View();
         }
 
         // POST: Trainers/Edit/5
@@ -155,35 +171,52 @@ namespace CoursesProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //public IActionResult DownloadFile(int id)
+        //{
+        //    Image image1 = Image.FromFile(path);
+        //}
+
         private bool TrainerExists(int id)
         {
             return _context.Trainers.Any(e => e.Id == id);
         }
 
 
-        //public string UploadFile(QuotationViewModel model)
+
+
+        public string UploadFile(TrainerViewModel model)
+        {
+            string newFileName = null;
+            string fullPath = null;
+            if (model.attachment != null)
+            {
+                string folderPath = Path.Combine(_environment.WebRootPath, "CVs");
+
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.attachment.FileName);
+
+                fullPath = Path.Combine(folderPath, newFileName);
+
+                using (var fStream = new FileStream(fullPath, FileMode.Create))
+                {
+                    model.attachment.CopyTo(fStream);
+                }
+            }
+            return newFileName;
+        }
+
+
+        //public FileResult DownloadFile(string fileName)
         //{
-        //    string newFileName = null;
-        //    string fullPath = null;
-        //    if (model.QuotationImage != null)
-        //    {
-        //        // target the path that we want to save the file on it.
-        //        string folderPath = Path.Combine(_environment.WebRootPath, "Images");
+        //    //Build the File Path.
+        //    string path = Server.MapPath("~/Files/") + fileName;
 
-        //        // Generate a uniqe name for the file + append the extention at the end
-        //        // eg: 71627102-2c2f-405f-b2e9-2093d50f831e.jpeg
-        //        newFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.QuotationImage.FileName);
+        //    //Read the File data into Byte Array.
+        //    byte[] bytes = System.IO.File.ReadAllBytes(path);
 
-        //        // Combine the path and the file
-        //        fullPath = Path.Combine(folderPath, newFileName);
-
-        //        // create the file
-        //        using (var fStream = new FileStream(fullPath, FileMode.Create))
-        //        {
-        //            model.QuotationImage.CopyTo(fStream);
-        //        }
-        //    }
-        //    return newFileName;
+        //    //Send the File to Download.
+        //    return File(bytes, "application/octet-stream", fileName);
         //}
+
+
     }
 }

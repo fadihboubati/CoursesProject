@@ -45,25 +45,28 @@ namespace CoursesProject.Controllers
             //    .ThenInclude(cour => cour.CategoryId == id)
             //    .ToListAsync();
 
+            if (category == null)
+            {
+                return NoContent();
+            }
+
             var Courses = await _context.Courses
                 .Where(c => c.CategoryId == id)
                 .ToListAsync();
             ViewBag.Courses = Courses;
 
             //String previousUrl = Request.UrlReferrer.AbsolutePath;
-            var prePath = Request.Path;
-            ViewBag.Path = prePath;
+            //var prePath = Request.Path;
+            //ViewBag.Path = prePath;
 
-            if (category == null)
-            {
-                return NotFound();
-            }
+
 
             return View(category);
         }
 
         // GET: Categories/Create
         [Authorize(Roles = "Administrator")]
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -74,7 +77,7 @@ namespace CoursesProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create( Category category)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +89,7 @@ namespace CoursesProject.Controllers
         }
 
         // GET: Categories/Edit/5
+        [HttpGet]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -139,6 +143,7 @@ namespace CoursesProject.Controllers
         }
 
         // GET: Categories/Delete/5
+        [HttpGet]
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {

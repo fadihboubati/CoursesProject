@@ -40,13 +40,13 @@ else
 }
 <div class="mt-5">
     @* Just for Admin  *@
-    @if (User.IsInRole("Administrator"))
+    @if (User.IsInRole("Administrator") && (ViewBag.Courses.Count != 0))
     {
         @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>*@
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">Edit</a>
     }
 
-    | <a asp-action="Index" class="btn btn-dark">Check all Category List</a> |
+    <a asp-action="Index" class="btn btn-dark">Check all Category List</a> |
     <a asp-action="Index" asp-controller="Courses" class="btn btn-dark">Check all Courses</a>
 </div>
 @*@ViewBag.Path*@

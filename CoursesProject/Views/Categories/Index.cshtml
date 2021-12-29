@@ -11,12 +11,12 @@
 @if (_signInManager.IsSignedIn(User))
 {
     <p>
-        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+        <a asp-action="Create" class="btn btn-outline-dark">Create New</a>
     </p>
 
 }
 <table class="table">
-    <thead>
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.CategoryName)
@@ -31,6 +31,7 @@
                 <td>
                     @*@Html.DisplayFor(modelItem => item.CategoryName)*@
                     <a asp-action="Details" asp-controller="Categories" asp-route-id="@item.Id">
+                        @*@item.CategoryName*@
                         @Html.DisplayFor(model => item.CategoryName)
                     </a>
                 </td>
